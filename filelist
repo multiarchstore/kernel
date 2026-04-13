@@ -18,6 +18,7 @@
 */*/docs/fdkernel.lsm
 */*/docs/history.txt
 */*/docs/intfns.txt
+*/*/docs/loongarch64-uefi.md
 */*/docs/lfnapi.txt
 */*/docs/mkboot.txt
 */*/docs/nls.txt
@@ -137,6 +138,13 @@
 */*/mkfiles/tc3.mak
 */*/mkfiles/turbocpp.mak
 */*/mkfiles/watcom.mak
+*/*/arch/loongarch64/start.S
+*/*/arch/loongarch64/trap.S
+*/*/arch/loongarch64/timer.c
+*/*/platform/uefi/Makefile.loongarch64
+*/*/platform/uefi/loongarch64_uefi.ld
+*/*/platform/uefi/main.c
+*/*/platform/uefi/uefi.h
 */*/sys/fdkrncfg.c
 */*/sys/bin2c.c
 */*/sys/makefile

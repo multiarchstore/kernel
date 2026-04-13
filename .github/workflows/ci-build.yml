@@ -50,3 +50,30 @@ jobs:
       with:
         name: ${{ steps.snapshotname.outputs.fname }}
         path: _output/*/*.???
+
+  loongarch64_uefi:
+    if: contains(github.event.head_commit.message, '[skip ci]') == false
+    runs-on: ubuntu-24.04
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v6
+
+    - name: Install LoongArch64 cross-tools
+      run: |
+        set -eux
+        target=loongarch64-unknown-linux-gnu
+        mkdir -p "$HOME/x-tools"
+        curl -fL "https://github.com/loong64/cross-tools/releases/latest/download/${target}.tar.xz" -o /tmp/${target}.tar.xz
+        tar -xf /tmp/${target}.tar.xz -C "$HOME/x-tools"
+        tool_bin="$(find "$HOME/x-tools" -type f -name "${target}-gcc" | head -n1 | xargs dirname)"
+        test -n "$tool_bin"
+        echo "$tool_bin" >> "$GITHUB_PATH"
+
+    - name: Build LoongArch64 UEFI milestone 1 artifact
+      run: make loongarch64_uefi
+
+    - name: Upload LoongArch64 UEFI artifact
+      uses: actions/upload-artifact@v6
+      with:
+        name: loongarch64-uefi-${{ github.sha }}
+        path: _output/loongarch64_uefi/*

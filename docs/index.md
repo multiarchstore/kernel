@@ -14,6 +14,10 @@ http://www.freedos.org/
 See the DOCS directory for more documentation and information about
 the FreeDOS Kernel.
 
+Experimental architecture/platform porting notes:
+
+  * [LoongArch64 UEFI Milestone 1](loongarch64-uefi.md)
+
 Contents of zip files:
   * [ke20xx_f16.zip](https://github.com/FDOS/kernel/releases/download/ke2043/ke2043_86f16.zip) : binaries for 8086, FAT12 and FAT16 only
   * [ke20xx_f32.zip](https://github.com/FDOS/kernel/releases/download/ke2043/ke2043_86f32.zip) : binaries for 8086, FAT12, FAT16, and FAT32

@@ -1,0 +1,46 @@
+CROSS_COMPILE ?= loongarch64-unknown-linux-gnu-
+CC := $(CROSS_COMPILE)gcc
+LD := $(CROSS_COMPILE)ld
+OBJCOPY := $(CROSS_COMPILE)objcopy
+
+OUTDIR := ../../_output/loongarch64_uefi
+ELF := $(OUTDIR)/freedos-loongarch64.elf
+EFI := $(OUTDIR)/BOOTLOONGARCH64.EFI
+
+CFLAGS := -Wall -Wextra -Werror -ffreestanding -fno-stack-protector -fshort-wchar -fno-pic \
+          -march=loongarch64 -mabi=lp64d -I. -I../../platform/uefi -I../../arch/loongarch64
+LDFLAGS := -nostdlib -T loongarch64_uefi.ld
+
+OBJS := $(OUTDIR)/main.o $(OUTDIR)/timer.o $(OUTDIR)/trap.o $(OUTDIR)/start.o
+
+.PHONY: all clean
+
+all: $(EFI)
+
+$(OUTDIR):
+	mkdir -p $(OUTDIR)
+
+$(OUTDIR)/main.o: main.c uefi.h | $(OUTDIR)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OUTDIR)/timer.o: ../../arch/loongarch64/timer.c ../../platform/uefi/uefi.h | $(OUTDIR)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OUTDIR)/trap.o: ../../arch/loongarch64/trap.S | $(OUTDIR)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(OUTDIR)/start.o: ../../arch/loongarch64/start.S | $(OUTDIR)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(ELF): $(OBJS) loongarch64_uefi.ld
+	$(LD) $(LDFLAGS) $(OBJS) -o $@
+
+$(EFI): $(ELF)
+	@if ! $(OBJCOPY) --help | grep -q pei-loongarch64; then \
+	  echo "objcopy target pei-loongarch64 is not available in $(OBJCOPY)"; \
+	  exit 1; \
+	fi
+	$(OBJCOPY) -O pei-loongarch64 $< $@
+
+clean:
+	rm -rf $(OUTDIR)

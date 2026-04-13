@@ -123,6 +123,9 @@ all:
 	cd setver && $(MAKE) production
 	$(MAKEREMOVE)
 
+loongarch64_uefi:
+	cd platform/uefi && make -f Makefile.loongarch64 all
+
 clean:
 	$(MAKEADJUST)
 	cd utils && $(MAKE) clean
@@ -133,6 +136,7 @@ clean:
 	cd kernel && $(MAKE) clean
 	cd country && $(MAKE) clean
 	cd setver && $(MAKE) clean
+	cd platform/uefi && make -f Makefile.loongarch64 clean
 	$(MAKEREMOVE)
 
 clobber:
@@ -145,4 +149,5 @@ clobber:
 	cd kernel && $(MAKE) clobber
 	cd country && $(MAKE) clobber
 	cd setver && $(MAKE) clobber
+	cd platform/uefi && make -f Makefile.loongarch64 clean
 	$(MAKEREMOVE)
