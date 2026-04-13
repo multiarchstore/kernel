@@ -72,7 +72,7 @@ jobs:
         test -n "$tool_bin"
         echo "$tool_bin" >> "$GITHUB_PATH"
 
-    - name: Build LoongArch64 UEFI milestone 1 artifact
+    - name: Build LoongArch64 UEFI milestone 2 artifact
       run: make loongarch64_uefi
 
     - name: Upload LoongArch64 UEFI artifact
