@@ -9,6 +9,9 @@ on:
   push:
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   build:
     if: contains(github.event.head_commit.message, '[skip ci]') == false
