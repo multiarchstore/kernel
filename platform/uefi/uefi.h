@@ -61,6 +61,16 @@ typedef struct
   void *ConfigurationTable;
 } EFI_SYSTEM_TABLE;
 
+typedef struct
+{
+  UINT32 Type;
+  UINT32 Pad;
+  UINT64 PhysicalStart;
+  UINT64 VirtualStart;
+  UINT64 NumberOfPages;
+  UINT64 Attribute;
+} EFI_MEMORY_DESCRIPTOR;
+
 #define EFI_SUCCESS 0
 
 #endif

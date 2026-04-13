@@ -1,15 +1,25 @@
-# FreeDOS LoongArch64 UEFI (Milestone 1)
+# FreeDOS LoongArch64 UEFI (Milestone 2)
 
 This repository is historically a 16-bit/32-bit x86 DOS kernel.
 The LoongArch64 + UEFI work is introduced incrementally.
 
 ## Scope in this milestone
 
-- Adds `arch/loongarch64` scaffold files for startup/trap/timer entry points.
-- Adds `platform/uefi` scaffold with minimal UEFI type definitions.
-- Adds a standalone LoongArch64 UEFI target that builds a simple EFI app printing a boot banner.
+- Keeps `arch/loongarch64` startup/trap/timer entry scaffolding.
+- Adds a basic LoongArch64 HAL interface in `arch/loongarch64/hal.h`.
+- Adds trap subsystem primitives:
+  - handler registration
+  - trap dispatch function
+  - per-vector/unhandled counters
+- Adds timer subsystem primitives:
+  - tick frequency configuration
+  - software tick counter
+- Adds early memory hooks:
+  - UEFI memory map page accounting
+  - fixed-size bump allocator for early allocations
+- Updates UEFI entry flow to initialize trap/timer/memory subsystems and print Milestone 2 status.
 
-This milestone does **not** yet provide DOS compatibility on LoongArch64.
+This milestone still does **not** provide DOS compatibility on LoongArch64.
 
 ## Toolchain
 
@@ -38,7 +48,6 @@ Artifacts are written to:
 
 ## Next milestones
 
-- Milestone 2: memory manager hooks, timer, and trap/exception handling.
 - Milestone 3: UEFI Block I/O integration and FAT/config load.
 - Milestone 4: DOS API core adaptation behind architecture/platform HAL.
 - Milestone 5: compatibility and regression validation.

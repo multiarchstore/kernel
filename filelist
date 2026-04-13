@@ -139,6 +139,9 @@
 */*/mkfiles/turbocpp.mak
 */*/mkfiles/watcom.mak
 */*/arch/loongarch64/start.S
+*/*/arch/loongarch64/hal.h
+*/*/arch/loongarch64/memory.c
+*/*/arch/loongarch64/trap.c
 */*/arch/loongarch64/trap.S
 */*/arch/loongarch64/timer.c
 */*/platform/uefi/Makefile.loongarch64
